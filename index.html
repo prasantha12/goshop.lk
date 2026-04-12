@@ -948,7 +948,7 @@ function openOrder() {
   openModal('orderModal');
 }
 
-function placeOrder() {
+async function placeOrder() {
   const name = document.getElementById('oName').value.trim();
   const address = document.getElementById('oAddress').value.trim();
   const district = document.getElementById('oDistrict').value;
@@ -957,10 +957,64 @@ function placeOrder() {
   const phone2 = document.getElementById('oPhone2').value.trim();
 
   if (!name || !address || !district || !city || !phone1) {
-    toast('Please fill all required fields (Name, Address, District, City, Phone 1)', 'error');
+    toast('Please fill all required fields', 'error');
     return;
   }
 
+  // Build order object (same structure as before)
+  const orderId = 'ORD-' + Date.now().toString().slice(-6);
+  const order = {
+    orderId: orderId,
+    customer: { name, address, district, city, phone1, phone2 },
+    items: window._pendingItems || [],
+    subtotal: window._pendingSubtotal || 0,
+    shipping: parseFloat(shippingCharge) || 0,
+    total: window._pendingTotal || 0,
+    status: 'pending',
+    date: new Date().toLocaleDateString('en-GB')
+  };
+
+  // Send to Google Sheets
+  const scriptURL = 'YOUR_APPS_SCRIPT_WEB_APP_URL'; // 👈 Paste your URL here
+
+  try {
+    const response = await fetch(scriptURL, {
+      method: 'POST',
+      mode: 'no-cors',               // Important for Google Apps Script
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order)
+    });
+
+    // Because of 'no-cors', we can't read the response directly.
+    // Assume success if no network error.
+    // Update stock & clear cart as before
+    const products = DB.get('products') || [];
+    (window._pendingItems || []).forEach(item => {
+      const prod = products.find(p => p.id === item.id);
+      if (prod) prod.stock = Math.max(0, prod.stock - item.qty);
+    });
+    DB.set('products', products);
+    if (getCart().length) saveCart([]);
+
+    // Show success modal
+    document.getElementById('successOrderId').innerHTML = `Order ID: ${order.orderId}`;
+    closeModal('orderModal');
+    openModal('successModal');
+
+    // Clear form fields
+    document.getElementById('oName').value = '';
+    document.getElementById('oAddress').value = '';
+    document.getElementById('oDistrict').value = '';
+    document.getElementById('oCity').value = '';
+    document.getElementById('oPhone1').value = '';
+    document.getElementById('oPhone2').value = '';
+
+    toast('Order placed! Check your Google Sheet.', 'success');
+  } catch (error) {
+    console.error(error);
+    toast('Failed to save order. Please try again.', 'error');
+  }
+}
   const orders = DB.get('orders') || [];
   const order = {
     id: 'ORD-' + Date.now().toString().slice(-6),
