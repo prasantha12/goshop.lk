@@ -947,6 +947,7 @@ function openOrder() {
   window._pendingTotal = grandTotal;
   openModal('orderModal');
 }
+
 async function placeOrder() {
   const name = document.getElementById('oName').value.trim();
   const address = document.getElementById('oAddress').value.trim();
@@ -956,49 +957,47 @@ async function placeOrder() {
   const phone2 = document.getElementById('oPhone2').value.trim();
 
   if (!name || !address || !district || !city || !phone1) {
-    toast('Please fill all required fields (Name, Address, District, City, Phone 1)', 'error');
+    toast('Please fill all required fields', 'error');
     return;
   }
 
-  // Build order object (structure expected by Google Sheet)
+  // Build order object (same structure as before)
   const orderId = 'ORD-' + Date.now().toString().slice(-6);
   const order = {
     orderId: orderId,
-    date: new Date().toLocaleDateString('en-GB'),
     customer: { name, address, district, city, phone1, phone2 },
     items: window._pendingItems || [],
-    subtotal: parseFloat(window._pendingSubtotal) || 0,
+    subtotal: window._pendingSubtotal || 0,
     shipping: parseFloat(shippingCharge) || 0,
-    total: parseFloat(window._pendingTotal) || 0,
-    discountPercent: parseFloat(globalDiscountPercent) || 0,
+    total: window._pendingTotal || 0,
     status: 'pending',
-    deliveryStatus: 'Pending'
+    date: new Date().toLocaleDateString('en-GB')
   };
 
-  // 👇 PASTE YOUR GOOGLE APPS SCRIPT URL HERE
-  const scriptURL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+  // Send to Google Sheets
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbz4V_iABdXwfVmGk8B0HUBEa7vfPX1Fbq6-orQeWlupXFyDZvQ_dC0EQsOGC7H4U6VeHg/exec'; // 👈 Paste your URL here
 
   try {
-    await fetch(scriptURL, {
+    const response = await fetch(scriptURL, {
       method: 'POST',
-      mode: 'no-cors',               // Required for Google Apps Script
+      mode: 'no-cors',               // Important for Google Apps Script
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(order)
     });
 
-    // Update product stock (same as before)
+    // Because of 'no-cors', we can't read the response directly.
+    // Assume success if no network error.
+    // Update stock & clear cart as before
     const products = DB.get('products') || [];
     (window._pendingItems || []).forEach(item => {
       const prod = products.find(p => p.id === item.id);
       if (prod) prod.stock = Math.max(0, prod.stock - item.qty);
     });
     DB.set('products', products);
-
-    // Clear cart
     if (getCart().length) saveCart([]);
 
-    // Show success
-    document.getElementById('successOrderId').innerHTML = `Order ID: ${orderId}`;
+    // Show success modal
+    document.getElementById('successOrderId').innerHTML = `Order ID: ${order.orderId}`;
     closeModal('orderModal');
     openModal('successModal');
 
@@ -1010,7 +1009,7 @@ async function placeOrder() {
     document.getElementById('oPhone1').value = '';
     document.getElementById('oPhone2').value = '';
 
-    toast('Order saved to Google Sheet!', 'success');
+    toast('Order placed! Check your Google Sheet.', 'success');
   } catch (error) {
     console.error(error);
     toast('Failed to save order. Please try again.', 'error');
