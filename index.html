@@ -62,6 +62,11 @@
   .admin-btn { background: transparent; border: 1px solid #3E3A36; color: var(--muted); border-radius: 6px; padding: 0.45rem 0.9rem; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
   .admin-btn:hover { border-color: var(--gold); color: var(--gold); }
 
+  /* Hide admin button from public by default */
+  .admin-btn {
+    display: none !important;
+  }
+
   .hamburger-icon {
     display: none;
     background: none;
@@ -75,6 +80,29 @@
   }
   .hamburger-icon:hover {
     color: var(--gold-light);
+  }
+
+  /* ========== HAMBURGER REPOSITIONING ========== */
+  .hamburger-icon {
+    display: block !important;
+    margin-left: auto;
+    order: 100;
+  }
+  .nav-actions {
+    margin-left: 0 !important;
+    order: 99;
+  }
+  .hamburger-icon,
+  .nav-actions {
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    .hamburger-icon {
+      margin-left: auto;
+    }
+    .search-wrap {
+      order: 3 !important;
+    }
   }
 
   .mobile-category-menu {
@@ -166,6 +194,40 @@
   .card-stock { font-size: 0.75rem; color: var(--muted); margin-top: 0.3rem; }
   .out-of-stock { opacity: 0.55; }
   .badge { display: inline-block; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; background: var(--red); color: white; border-radius: 4px; padding: 0.15rem 0.4rem; margin-left: 0.5rem; vertical-align: middle; }
+
+  /* Pagination styling */
+  .pagination-wrap {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .page-btn {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--dark);
+    font-weight: 500;
+  }
+  .page-btn.active {
+    background: var(--dark);
+    border-color: var(--dark);
+    color: var(--gold);
+  }
+  .page-btn:hover:not(.active) {
+    background: var(--cream);
+    border-color: var(--gold);
+  }
+  .page-btn.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 
   .page { animation: fadeIn 0.3s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
@@ -271,7 +333,188 @@
   @keyframes slideIn { from { opacity:0; transform: translateX(20px); } to { opacity:1; transform: translateX(0); } }
   @keyframes fadeOut { to { opacity:0; } }
 
-  /* ========== RESPONSIVE DESIGN ========== */
+  /* Footer styling – subtle admin lock */
+  .site-footer {
+    background: var(--dark);
+    border-top: 1px solid rgba(201,168,76,0.2);
+    margin-top: 3rem;
+    padding: 1rem 2rem;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .footer-copyright {
+    letter-spacing: 0.02em;
+  }
+  .footer-admin {
+    line-height: 1;
+  }
+  .admin-lock {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    color: var(--muted);
+    opacity: 0.5;
+    transition: opacity 0.2s, color 0.2s;
+    padding: 0.2rem;
+  }
+  .admin-lock:hover {
+    opacity: 1;
+    color: var(--gold);
+  }
+  @media (max-width: 640px) {
+    .site-footer {
+      padding: 0.8rem 1.2rem;
+    }
+    .footer-content {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .footer-copyright {
+      font-size: 0.65rem;
+    }
+    .admin-lock {
+      font-size: 0.9rem;
+    }
+  }
+
+  /* ========== MODERN ADMIN LOGIN STYLES (isolated) ========== */
+  .admin-login-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    padding: 2rem;
+  }
+  .admin-login-card {
+    max-width: 440px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(2px);
+    border-radius: 32px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(201, 168, 76, 0.1);
+    padding: 2rem 2rem 2.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .admin-login-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(201, 168, 76, 0.2);
+  }
+  .admin-login-logo {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  .admin-login-logo img {
+    max-width: 140px;
+    height: auto;
+    margin: 0 auto;
+  }
+  .admin-login-logo .logo-placeholder {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 0.1em;
+  }
+  .admin-login-title {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: var(--dark);
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .admin-login-sub {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 1.8rem;
+  }
+  .admin-login-field {
+    margin-bottom: 1.2rem;
+  }
+  .admin-login-field label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+  .admin-login-field input {
+    width: 100%;
+    background: #FFFFFF;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s ease;
+    outline: none;
+    color: var(--dark);
+  }
+  .admin-login-field input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.2);
+  }
+  .admin-login-field input:hover {
+    border-color: var(--gold-light);
+  }
+  .admin-login-button {
+    width: 100%;
+    background: linear-gradient(135deg, var(--dark) 0%, #2E2A26 100%);
+    border: none;
+    border-radius: 40px;
+    padding: 0.9rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    transition: all 0.25s;
+    margin-top: 0.5rem;
+    letter-spacing: 0.03em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  .admin-login-button:hover {
+    background: linear-gradient(135deg, #2E2A26 0%, var(--dark) 100%);
+    transform: scale(1.01);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  .admin-login-button:active {
+    transform: scale(0.98);
+  }
+  .admin-login-demo {
+    text-align: center;
+    margin-top: 1.8rem;
+    font-size: 0.7rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 1.2rem;
+  }
+  .admin-login-demo span {
+    color: var(--gold);
+    font-weight: 600;
+  }
+  @media (max-width: 560px) {
+    .admin-login-card {
+      padding: 1.5rem;
+    }
+    .admin-login-title {
+      font-size: 1.4rem;
+    }
+  }
+
+  /* ========== RESPONSIVE DESIGN (existing) ========== */
   @media (max-width: 1024px) {
     .product-grid {
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -354,7 +597,6 @@
       padding: 0.3rem 0.8rem;
       font-size: 0.75rem;
     }
-    /* Mobile reordering for product detail page */
     .detail-layout {
       display: flex;
       flex-direction: column;
@@ -529,7 +771,9 @@
       <input type="text" id="searchInput" placeholder="Search products…" oninput="handleSearch(this.value)"/>
     </div>
     <div class="nav-actions">
-      <button class="cart-btn" onclick="toggleCart()">🛒 Cart <span class="cart-badge" id="cartBadge">0</span></button>
+      <!-- Cart button only shows emoji -->
+      <button class="cart-btn" onclick="toggleCart()">🛒<span class="cart-badge" id="cartBadge">0</span></button>
+      <!-- Admin button hidden by default, revealed with ?admin=1 -->
       <button class="admin-btn" onclick="showPage('admin')">⚙ Admin</button>
     </div>
   </div>
@@ -557,6 +801,8 @@
   <div class="grid-wrap">
     <h2 class="section-title">Our <span>Collection</span></h2>
     <div class="product-grid" id="productGrid"></div>
+    <!-- Pagination container -->
+    <div id="paginationContainer" class="pagination-wrap"></div>
   </div>
 </div>
 
@@ -637,24 +883,46 @@
 
 <div class="toast-wrap" id="toastWrap"></div>
 
+<!-- Footer with subtle admin lock -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-copyright">
+      &copy; 2025 LUXE STORE — Elegance delivered.
+    </div>
+    <div class="footer-admin">
+      <button class="admin-lock" onclick="showPage('admin')" aria-label="Admin access">🔒</button>
+    </div>
+  </div>
+</footer>
+
 <script>
 // ==================== DATA STORE ====================
 const DB = { get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } }, set(k,v){ localStorage.setItem(k, JSON.stringify(v)); } };
 const SEED_PRODUCTS = [
-  { id:'p1', name:'Silk Evening Dress', category:'Fashion', price:12500, oldPrice:16000, stock:15, emoji:'👗', desc:'Luxurious pure silk evening dress.', sizes:['XS','S','M','L','XL'], colors:['#1A1714','#C9A84C','#8B0000'], imageData:null, relatedProducts:[] },
-  { id:'p2', name:'Leather Crossbody Bag', category:'Fashion', price:8900, oldPrice:null, stock:8, emoji:'👜', desc:'Handcrafted genuine leather bag.', sizes:[], colors:['#8B4513','#1A1714'], imageData:null, relatedProducts:[] },
-  { id:'p3', name:'Minimalist Watch', category:'Electronics', price:22000, oldPrice:28000, stock:5, emoji:'⌚', desc:'Swiss-inspired minimalist watch.', sizes:[], colors:['#C0C0C0','#C9A84C'], imageData:null, relatedProducts:[] },
-  { id:'p4', name:'Cashmere Sweater', category:'Fashion', price:9800, oldPrice:null, stock:20, emoji:'🧥', desc:'100% cashmere sweater.', sizes:['S','M','L','XL'], colors:['#C0A080','#708090'], imageData:null, relatedProducts:[] },
-  { id:'p5', name:'Artisan Perfume', category:'Health & Beauty', price:6500, oldPrice:7500, stock:12, emoji:'🧴', desc:'Exclusive artisan fragrance.', sizes:['30ml','50ml','100ml'], colors:[], imageData:null, relatedProducts:[] },
-  { id:'p6', name:'Running Sneakers', category:'Fashion', price:11200, oldPrice:14000, stock:30, emoji:'👟', desc:'High-performance sneakers.', sizes:['39','40','41','42','43'], colors:['#FFFFFF','#1A1714'], imageData:null, relatedProducts:[] },
-  { id:'p7', name:'Ceramic Coffee Set', category:'Home & Kitchen', price:4200, oldPrice:null, stock:7, emoji:'☕', desc:'Handmade ceramic coffee set.', sizes:['2-piece','4-piece'], colors:['#E8D0A9','#708090'], imageData:null, relatedProducts:[] },
-  { id:'p8', name:'Silk Scarf', category:'Fashion', price:3400, oldPrice:4200, stock:0, emoji:'🧣', desc:'Pure silk scarf.', sizes:['90x90cm','70x70cm'], colors:['#C9A84C','#8B0000'], imageData:null, relatedProducts:[] },
-  { id:'p9', name:'Wireless Earbuds', category:'Electronics', price:18500, oldPrice:22000, stock:25, emoji:'🎧', desc:'Noise cancelling earbuds.', sizes:[], colors:['#1A1714','#FFFFFF'], imageData:null, relatedProducts:[] },
-  { id:'p10', name:'Linen Trousers', category:'Fashion', price:5600, oldPrice:null, stock:18, emoji:'👖', desc:'Breathable linen trousers.', sizes:['28','30','32','34','36'], colors:['#F5F5DC','#2F4F4F'], imageData:null, relatedProducts:[] },
-  { id:'p11', name:'Face Serum', category:'Health & Beauty', price:7200, oldPrice:8800, stock:14, emoji:'💆', desc:'Vitamin C brightening serum.', sizes:['15ml','30ml'], colors:[], imageData:null, relatedProducts:[] },
-  { id:'p12', name:'Canvas Tote Bag', category:'Fashion', price:2100, oldPrice:null, stock:50, emoji:'🛍️', desc:'Organic cotton tote bag.', sizes:[], colors:['#F5F5DC','#1A1714'], imageData:null, relatedProducts:[] }
+  { id:'p1', name:'Silk Evening Dress', category:'Fashion', price:12500, oldPrice:16000, stock:15, emoji:'👗', desc:'Luxurious pure silk evening dress.', sizes:['XS','S','M','L','XL'], colors:['#1A1714','#C9A84C','#8B0000'], imageData:null, relatedProducts:[], visible:true },
+  { id:'p2', name:'Leather Crossbody Bag', category:'Fashion', price:8900, oldPrice:null, stock:8, emoji:'👜', desc:'Handcrafted genuine leather bag.', sizes:[], colors:['#8B4513','#1A1714'], imageData:null, relatedProducts:[], visible:true },
+  { id:'p3', name:'Minimalist Watch', category:'Electronics', price:22000, oldPrice:28000, stock:5, emoji:'⌚', desc:'Swiss-inspired minimalist watch.', sizes:[], colors:['#C0C0C0','#C9A84C'], imageData:null, relatedProducts:[], visible:true },
+  { id:'p4', name:'Cashmere Sweater', category:'Fashion', price:9800, oldPrice:null, stock:20, emoji:'🧥', desc:'100% cashmere sweater.', sizes:['S','M','L','XL'], colors:['#C0A080','#708090'], imageData:null, relatedProducts:[], visible:true },
+  { id:'p5', name:'Artisan Perfume', category:'Health & Beauty', price:6500, oldPrice:7500, stock:12, emoji:'🧴', desc:'Exclusive artisan fragrance.', sizes:['30ml','50ml','100ml'], colors:[], imageData:null, relatedProducts:[], visible:true },
+  { id:'p6', name:'Running Sneakers', category:'Fashion', price:11200, oldPrice:14000, stock:30, emoji:'👟', desc:'High-performance sneakers.', sizes:['39','40','41','42','43'], colors:['#FFFFFF','#1A1714'], imageData:null, relatedProducts:[], visible:true },
+  { id:'p7', name:'Ceramic Coffee Set', category:'Home & Kitchen', price:4200, oldPrice:null, stock:7, emoji:'☕', desc:'Handmade ceramic coffee set.', sizes:['2-piece','4-piece'], colors:['#E8D0A9','#708090'], imageData:null, relatedProducts:[], visible:true },
+  { id:'p8', name:'Silk Scarf', category:'Fashion', price:3400, oldPrice:4200, stock:0, emoji:'🧣', desc:'Pure silk scarf.', sizes:['90x90cm','70x70cm'], colors:['#C9A84C','#8B0000'], imageData:null, relatedProducts:[], visible:true },
+  { id:'p9', name:'Wireless Earbuds', category:'Electronics', price:18500, oldPrice:22000, stock:25, emoji:'🎧', desc:'Noise cancelling earbuds.', sizes:[], colors:['#1A1714','#FFFFFF'], imageData:null, relatedProducts:[], visible:true },
+  { id:'p10', name:'Linen Trousers', category:'Fashion', price:5600, oldPrice:null, stock:18, emoji:'👖', desc:'Breathable linen trousers.', sizes:['28','30','32','34','36'], colors:['#F5F5DC','#2F4F4F'], imageData:null, relatedProducts:[], visible:true },
+  { id:'p11', name:'Face Serum', category:'Health & Beauty', price:7200, oldPrice:8800, stock:14, emoji:'💆', desc:'Vitamin C brightening serum.', sizes:['15ml','30ml'], colors:[], imageData:null, relatedProducts:[], visible:true },
+  { id:'p12', name:'Canvas Tote Bag', category:'Fashion', price:2100, oldPrice:null, stock:50, emoji:'🛍️', desc:'Organic cotton tote bag.', sizes:[], colors:['#F5F5DC','#1A1714'], imageData:null, relatedProducts:[], visible:true }
 ];
-function initData(){ if(!DB.get('products')) DB.set('products', SEED_PRODUCTS); if(!DB.get('orders')) DB.set('orders', []); if(!DB.get('cart')) DB.set('cart', []); }
+function initData(){ 
+  if(!DB.get('products')) DB.set('products', SEED_PRODUCTS); 
+  else {
+    let products = DB.get('products');
+    let updated = false;
+    products.forEach(p => { if (p.visible === undefined) { p.visible = true; updated = true; } });
+    if (updated) DB.set('products', products);
+  }
+  if(!DB.get('orders')) DB.set('orders', []); 
+  if(!DB.get('cart')) DB.set('cart', []); 
+}
 
 let currentProduct = null, currentQty = 1, selectedSize = null, selectedColor = null, activeCategory = 'All', searchQuery = '', adminTab = 'dashboard', editingProduct = null, adminLoggedIn = false;
 let pendingImageBase64 = null;
@@ -662,6 +930,11 @@ let dateRangeStart = '', dateRangeEnd = '';
 let adminProductSearchQuery = '';
 let globalDiscountPercent = 0;
 let shippingCharge = 0;
+let lowStockFilterActive = false;
+
+// Pagination variables
+let currentPage = 1;
+const ITEMS_PER_PAGE = 50;
 
 function loadGlobalSettings() {
   const savedDiscount = localStorage.getItem('globalDiscount');
@@ -701,15 +974,9 @@ function renderCategorySection() {
 }
 function filterByCategory(category) {
   activeCategory = category;
+  currentPage = 1;
   renderCategorySection();
   renderGrid();
-  const oldPills = document.querySelectorAll('#catBar .cat-pill');
-  if (oldPills.length) {
-    oldPills.forEach(btn => {
-      if (btn.textContent === category || (category === 'All' && btn.textContent === 'All')) btn.classList.add('active');
-      else btn.classList.remove('active');
-    });
-  }
 }
 function showPage(page){
   document.getElementById('homePage').style.display = page==='home' ? 'block' : 'none';
@@ -721,8 +988,12 @@ function showPage(page){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function renderCategories(){ const products = DB.get('products')||[]; const cats = ['All', ...new Set(products.map(p=>p.category))]; const bar = document.getElementById('catBar'); if(bar) bar.innerHTML = cats.map(c=>`<button class="cat-pill${c===activeCategory?' active':''}" onclick="filterCat('${c}')">${c}</button>`).join(''); }
-function filterCat(cat){ activeCategory = cat; renderCategories(); renderGrid(); renderCategorySection(); }
-function handleSearch(q){ searchQuery = q; renderGrid(); }
+function filterCat(cat){ activeCategory = cat; currentPage = 1; renderCategories(); renderGrid(); renderCategorySection(); }
+function handleSearch(q){ 
+  searchQuery = q; 
+  currentPage = 1;
+  renderGrid(); 
+}
 function cardHTML(p){ 
   const out = p.stock===0;
   const discounted = getDiscountedPrice(p.price);
@@ -737,7 +1008,84 @@ function cardHTML(p){
     </div>
   </div>`; 
 }
-function renderGrid(){ renderCategories(); const products = DB.get('products')||[]; const filtered = products.filter(p=> (activeCategory==='All'||p.category===activeCategory) && (!searchQuery||p.name.toLowerCase().includes(searchQuery.toLowerCase())||p.category.toLowerCase().includes(searchQuery.toLowerCase()))); document.getElementById('productGrid').innerHTML = filtered.length ? filtered.map(cardHTML).join('') : '<div style="grid-column:1/-1;text-align:center;padding:4rem;color:var(--muted)"><div>🔍</div><p>No products found</p></div>'; }
+
+function toggleVisibility(productId, isChecked) {
+  const products = DB.get('products') || [];
+  const product = products.find(p => p.id === productId);
+  if (product) {
+    product.visible = isChecked;
+    DB.set('products', products);
+    toast(`Product "${product.name}" is now ${isChecked ? 'visible' : 'hidden'} on the store`, 'success');
+  }
+}
+
+function renderGrid() {
+  const products = DB.get('products') || [];
+  let filtered = products.filter(p => 
+    (activeCategory === 'All' || p.category === activeCategory) && 
+    (!searchQuery || p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.category.toLowerCase().includes(searchQuery.toLowerCase())) &&
+    (p.visible !== false)
+  );
+  
+  const totalProducts = filtered.length;
+  const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
+  if (currentPage < 1) currentPage = 1;
+  if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+  
+  const start = (currentPage - 1) * ITEMS_PER_PAGE;
+  const end = start + ITEMS_PER_PAGE;
+  const pageProducts = filtered.slice(start, end);
+  
+  const gridContainer = document.getElementById('productGrid');
+  if (pageProducts.length === 0) {
+    gridContainer.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:4rem;color:var(--muted)"><div>🔍</div><p>No products found</p></div>';
+  } else {
+    gridContainer.innerHTML = pageProducts.map(cardHTML).join('');
+  }
+  
+  renderPagination(totalPages, currentPage, totalProducts);
+}
+
+function renderPagination(totalPages, currentPage, totalItems) {
+  const container = document.getElementById('paginationContainer');
+  if (!container) return;
+  if (totalPages <= 1) {
+    container.innerHTML = '';
+    return;
+  }
+  
+  let buttons = [];
+  buttons.push(`<button class="page-btn ${currentPage === 1 ? 'disabled' : ''}" data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''}>‹ Prev</button>`);
+  
+  let startPage = Math.max(1, currentPage - 3);
+  let endPage = Math.min(totalPages, currentPage + 3);
+  if (startPage > 1) {
+    buttons.push(`<button class="page-btn" data-page="1">1</button>`);
+    if (startPage > 2) buttons.push(`<span class="page-btn disabled" style="cursor:default;">...</span>`);
+  }
+  for (let i = startPage; i <= endPage; i++) {
+    buttons.push(`<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`);
+  }
+  if (endPage < totalPages) {
+    if (endPage < totalPages - 1) buttons.push(`<span class="page-btn disabled" style="cursor:default;">...</span>`);
+    buttons.push(`<button class="page-btn" data-page="${totalPages}">${totalPages}</button>`);
+  }
+  
+  buttons.push(`<button class="page-btn ${currentPage === totalPages ? 'disabled' : ''}" data-page="${currentPage + 1}" ${currentPage === totalPages ? 'disabled' : ''}>Next ›</button>`);
+  
+  container.innerHTML = buttons.join('');
+  
+  container.querySelectorAll('.page-btn:not(.disabled)').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const page = parseInt(btn.getAttribute('data-page'));
+      if (!isNaN(page) && page !== currentPage && page >= 1 && page <= totalPages) {
+        currentPage = page;
+        renderGrid();
+        document.querySelector('.grid-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+}
 
 function openProduct(id){ const products = DB.get('products')||[]; currentProduct = products.find(p=>p.id===id); currentQty=1; selectedSize=currentProduct?.sizes?.[0]||null; selectedColor=currentProduct?.colors?.[0]||null; showPage('detail'); }
 function renderDetail(){
@@ -761,7 +1109,7 @@ function renderDetail(){
     relatedItems = p.relatedProducts.map(id => allProducts.find(prod => prod.id === id)).filter(Boolean);
   }
   if(!relatedItems.length) {
-    relatedItems = allProducts.filter(prod => prod.category === p.category && prod.id !== p.id).slice(0, 4);
+    relatedItems = allProducts.filter(prod => prod.category === p.category && prod.id !== p.id && prod.visible !== false).slice(0, 4);
   }
   const similarGrid = document.getElementById('similarGrid');
   if(!relatedItems.length) {
@@ -948,7 +1296,7 @@ function openOrder() {
   openModal('orderModal');
 }
 
-async function placeOrder() {
+function placeOrder() {
   const name = document.getElementById('oName').value.trim();
   const address = document.getElementById('oAddress').value.trim();
   const district = document.getElementById('oDistrict').value;
@@ -957,64 +1305,47 @@ async function placeOrder() {
   const phone2 = document.getElementById('oPhone2').value.trim();
 
   if (!name || !address || !district || !city || !phone1) {
-    toast('Please fill all required fields', 'error');
+    toast('Please fill all required fields (Name, Address, District, City, Phone 1)', 'error');
     return;
   }
 
-  // Build order object (same structure as before)
-  const orderId = 'ORD-' + Date.now().toString().slice(-6);
+  const orders = DB.get('orders') || [];
   const order = {
-    orderId: orderId,
+    id: 'ORD-' + Date.now().toString().slice(-6),
+    date: new Date().toLocaleDateString('en-GB'),
     customer: { name, address, district, city, phone1, phone2 },
     items: window._pendingItems || [],
-    subtotal: window._pendingSubtotal || 0,
+    subtotal: parseFloat(window._pendingSubtotal) || 0,
     shipping: parseFloat(shippingCharge) || 0,
-    total: window._pendingTotal || 0,
+    total: parseFloat(window._pendingTotal) || 0,
+    discountPercent: parseFloat(globalDiscountPercent) || 0,
     status: 'pending',
-    date: new Date().toLocaleDateString('en-GB')
+    deliveryStatus: 'Pending'
   };
+  orders.push(order);
+  DB.set('orders', orders);
 
-  // Send to Google Sheets
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbz4V_iABdXwfVmGk8B0HUBEa7vfPX1Fbq6-orQeWlupXFyDZvQ_dC0EQsOGC7H4U6VeHg/exec'; // 👈 Paste your URL here
+  const products = DB.get('products') || [];
+  (window._pendingItems || []).forEach(item => {
+    const prod = products.find(p => p.id === item.id);
+    if (prod) prod.stock = Math.max(0, prod.stock - item.qty);
+  });
+  DB.set('products', products);
 
-  try {
-    const response = await fetch(scriptURL, {
-      method: 'POST',
-      mode: 'no-cors',               // Important for Google Apps Script
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(order)
-    });
+  if (getCart().length) saveCart([]);
 
-    // Because of 'no-cors', we can't read the response directly.
-    // Assume success if no network error.
-    // Update stock & clear cart as before
-    const products = DB.get('products') || [];
-    (window._pendingItems || []).forEach(item => {
-      const prod = products.find(p => p.id === item.id);
-      if (prod) prod.stock = Math.max(0, prod.stock - item.qty);
-    });
-    DB.set('products', products);
-    if (getCart().length) saveCart([]);
+  document.getElementById('successOrderId').innerHTML = `Order ID: ${order.id}`;
+  closeModal('orderModal');
+  openModal('successModal');
 
-    // Show success modal
-    document.getElementById('successOrderId').innerHTML = `Order ID: ${order.orderId}`;
-    closeModal('orderModal');
-    openModal('successModal');
-
-    // Clear form fields
-    document.getElementById('oName').value = '';
-    document.getElementById('oAddress').value = '';
-    document.getElementById('oDistrict').value = '';
-    document.getElementById('oCity').value = '';
-    document.getElementById('oPhone1').value = '';
-    document.getElementById('oPhone2').value = '';
-
-    toast('Order placed! Check your Google Sheet.', 'success');
-  } catch (error) {
-    console.error(error);
-    toast('Failed to save order. Please try again.', 'error');
-  }
+  document.getElementById('oName').value = '';
+  document.getElementById('oAddress').value = '';
+  document.getElementById('oDistrict').value = '';
+  document.getElementById('oCity').value = '';
+  document.getElementById('oPhone1').value = '';
+  document.getElementById('oPhone2').value = '';
 }
+
 // ========== HAMBURGER MENU FUNCTIONS ==========
 function populateMobileMenu() {
   const container = document.getElementById('mobileCategoryList');
@@ -1034,6 +1365,7 @@ function populateMobileMenu() {
         filterByCategory(category);
       } else {
         activeCategory = category;
+        currentPage = 1;
         renderGrid();
         renderCategorySection();
       }
@@ -1057,6 +1389,15 @@ function toggleMobileMenu() {
   if (menu.classList.contains('open')) closeMobileMenu();
   else openMobileMenu();
 }
+
+// ========== REVEAL ADMIN BUTTON WITH URL PARAMETER ==========
+(function revealAdmin() {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('admin') === '1') {
+    const adminBtn = document.querySelector('.admin-btn');
+    if (adminBtn) adminBtn.style.display = 'flex';
+  }
+})();
 
 // ========== REMAINING ADMIN & UTILITY FUNCTIONS ==========
 function applyDateRangeFilter() {
@@ -1160,7 +1501,7 @@ function openOrderDetail(orderId) {
     return `<tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 0;display:flex;align-items:center;" data-label="Product">${imgHtml} ${item.name} ${item.size ? `(${item.size})` : ''} ${item.color ? `- ${item.color}` : ''}</td><td style="padding:8px 0;text-align:right;" data-label="Original">LKR ${originalPrice.toLocaleString()}</td><td style="padding:8px 0;text-align:right;" data-label="Discount">- LKR ${discountAmount.toLocaleString()}</td><td style="padding:8px 0;text-align:right;" data-label="Unit Price">LKR ${finalPrice.toLocaleString()}</td><td style="padding:8px 0;text-align:center;" data-label="Qty">${item.qty}</td><td style="padding:8px 0;text-align:right;" data-label="Line Total">LKR ${lineTotal.toLocaleString()}</td></tr>`;
   }).join('');
   const total = (order.total !== undefined) ? order.total : (subtotal + (order.shipping || 0));
-  document.getElementById('orderDetailContent').innerHTML = `<div style="display:grid;gap:1rem;"><div style="background:var(--cream);padding:1rem;border-radius:12px;"><h4>🧑‍💼 Customer</h4><p><strong>Name:</strong> ${order.customer.name}</p><p><strong>Phone 1:</strong> ${order.customer.phone1}</p><p><strong>Phone 2:</strong> ${order.customer.phone2 || '—'}</p><p><strong>City:</strong> ${order.customer.city}</p><p><strong>District:</strong> ${order.customer.district}</p><p><strong>Address:</strong> ${order.customer.address}</p></div><div style="background:var(--cream);padding:1rem;border-radius:12px;"><h4>🚚 Shipping & Status</h4><p><strong>Order Status:</strong> <span class="status-badge status-${order.status}">${order.status}</span></p><p><strong>Delivery Status:</strong> <span class="status-badge delivery-${(order.deliveryStatus || 'Pending').toLowerCase()}">${order.deliveryStatus || 'Pending'}</span></p><p><strong>Date:</strong> ${order.date}</p></div><div><h4>🛍️ Products</h4><table style="width:100%;font-size:0.85rem;border-collapse:collapse;"><thead><tr style="border-bottom:1px solid var(--border);"><th style="text-align:left;">Product</th><th style="text-align:right;">Original</th><th style="text-align:right;">Discount</th><th style="text-align:right;">Unit Price</th><th style="text-align:center;">Qty</th><th style="text-align:right;">Line Total</th></tr></thead><tbody>${itemsHtml || '<tr><td colspan="6">No items</td></td>'}</tbody></table><div style="margin-top:12px;text-align:right;border-top:1px solid var(--border);padding-top:8px;"><div><strong>Subtotal:</strong> LKR ${subtotal.toLocaleString()}</div><div><strong>Delivery Charge:</strong> LKR ${(order.shipping || shippingCharge).toLocaleString()}</div><div style="font-size:1.1rem;font-weight:700;">Grand Total: LKR ${total.toLocaleString()}</div></div></div><div style="display:flex;gap:0.8rem;justify-content:flex-end;"><button class="btn-gold" onclick="generatePDF('${order.id}')">📄 PDF Bill</button><button class="btn-primary" onclick="closeModal('orderDetailModal')">Close</button></div></div>`;
+  document.getElementById('orderDetailContent').innerHTML = `<div style="display:grid;gap:1rem;"><div style="background:var(--cream);padding:1rem;border-radius:12px;"><h4>🧑‍💼 Customer</h4><p><strong>Name:</strong> ${order.customer.name}</p><p><strong>Phone 1:</strong> ${order.customer.phone1}</p><p><strong>Phone 2:</strong> ${order.customer.phone2 || '—'}</p><p><strong>City:</strong> ${order.customer.city}</p><p><strong>District:</strong> ${order.customer.district}</p><p><strong>Address:</strong> ${order.customer.address}</p></div><div style="background:var(--cream);padding:1rem;border-radius:12px;"><h4>🚚 Shipping & Status</h4><p><strong>Order Status:</strong> <span class="status-badge status-${order.status}">${order.status}</span></p><p><strong>Delivery Status:</strong> <span class="status-badge delivery-${(order.deliveryStatus || 'Pending').toLowerCase()}">${order.deliveryStatus || 'Pending'}</span></p><p><strong>Date:</strong> ${order.date}</p></div><div><h4>🛍️ Products</h4><table style="width:100%;font-size:0.85rem;border-collapse:collapse;"><thead><tr style="border-bottom:1px solid var(--border);"><th style="text-align:left;">Product</th><th style="text-align:right;">Original</th><th style="text-align:right;">Discount</th><th style="text-align:right;">Unit Price</th><th style="text-align:center;">Qty</th><th style="text-align:right;">Line Total</th></tr></thead><tbody>${itemsHtml || '<tr><td colspan="6">No items</td></tr>'}</tbody></table><div style="margin-top:12px;text-align:right;border-top:1px solid var(--border);padding-top:8px;"><div><strong>Subtotal:</strong> LKR ${subtotal.toLocaleString()}</div><div><strong>Delivery Charge:</strong> LKR ${(order.shipping || shippingCharge).toLocaleString()}</div><div style="font-size:1.1rem;font-weight:700;">Grand Total: LKR ${total.toLocaleString()}</div></div></div><div style="display:flex;gap:0.8rem;justify-content:flex-end;"><button class="btn-gold" onclick="generatePDF('${order.id}')">📄 PDF Bill</button><button class="btn-primary" onclick="closeModal('orderDetailModal')">Close</button></div></div>`;
   openModal('orderDetailModal');
 }
 
@@ -1168,21 +1509,70 @@ function openOrderDetail(orderId) {
 function renderAdmin() {
   const page = document.getElementById('adminPage');
   if (!adminLoggedIn) {
-    page.innerHTML = `<div class="login-wrap"><div class="login-box"><div style="font-size:2rem;text-align:center">🔐</div><h2>Admin Access</h2><p>demo: admin / admin123</p><div class="form-group"><label>Username</label><input type="text" id="adminUser" placeholder="admin"/></div><div class="form-group"><label>Password</label><input type="password" id="adminPass" onkeydown="if(event.key==='Enter')adminLogin()"/></div><button class="btn-gold" style="width:100%" onclick="adminLogin()">Login →</button></div></div>`;
+    // Beautiful modern login card
+    page.innerHTML = `
+      <div class="admin-login-wrapper">
+        <div class="admin-login-card">
+          <div class="admin-login-logo">
+            <!-- Place your Oshop.lk logo here. Replace src with your actual logo URL -->
+            <img src="https://placehold.co/200x60?text=OShop.lk" alt="Oshop.lk Logo" style="max-width: 160px;">
+            <!-- If you prefer text logo, uncomment below and remove img -->
+            <!-- <div class="logo-placeholder">Oshop.lk</div> -->
+          </div>
+          <div class="admin-login-title">Welcome Back</div>
+          <div class="admin-login-sub">Sign in to manage your store</div>
+          <div class="admin-login-field">
+            <label>Username</label>
+            <input type="text" id="adminUser" placeholder="admin" autocomplete="off">
+          </div>
+          <div class="admin-login-field">
+            <label>Password</label>
+            <input type="password" id="adminPass" onkeydown="if(event.key==='Enter')adminLogin()" placeholder="••••••">
+          </div>
+          <button class="admin-login-button" onclick="adminLogin()">Login →</button>
+          <div class="admin-login-demo">
+            <span>Demo:</span> admin / admin123
+          </div>
+        </div>
+      </div>
+    `;
     return;
   }
   const orders = DB.get('orders') || [], products = DB.get('products') || [];
   page.innerHTML = `<div class="admin-wrap"><div style="display:flex;justify-content:space-between;margin-bottom:1rem"><h1 style="font-size:2rem;font-weight:300">Admin <span style="color:var(--gold)">Dashboard</span></h1><div><button class="admin-btn" onclick="showPage('home')">← Store</button><button class="admin-btn" onclick="adminLogout()" style="border-color:#C0392B">Logout</button></div></div><div class="admin-tabs"><button class="admin-tab${adminTab === 'dashboard' ? ' active' : ''}" onclick="switchAdminTab('dashboard')">Dashboard</button><button class="admin-tab${adminTab === 'orders' ? ' active' : ''}" onclick="switchAdminTab('orders')">Orders (${orders.length})</button><button class="admin-tab${adminTab === 'products' ? ' active' : ''}" onclick="switchAdminTab('products')">Products (${products.length})</button><button class="admin-tab${adminTab === 'pricing' ? ' active' : ''}" onclick="switchAdminTab('pricing')">💰 Pricing</button><button class="admin-tab${adminTab === 'branding' ? ' active' : ''}" onclick="switchAdminTab('branding')">🎨 Branding</button><button class="admin-tab${adminTab === 'add' ? ' active' : ''}" onclick="switchAdminTab('add')">${editingProduct ? 'Edit Product' : 'Add Product'}</button></div><div id="adminContent"></div></div>`;
   renderAdminContent();
 }
-function switchAdminTab(tab) { adminTab = tab; if (tab !== 'add') editingProduct = null; adminProductSearchQuery = ''; renderAdminContent(); }
+function switchAdminTab(tab) {
+  adminTab = tab;
+  if (tab !== 'add') editingProduct = null;
+  adminProductSearchQuery = '';
+  lowStockFilterActive = false;
+  renderAdminContent();
+}
 function updateAdminProductSearch(query) { adminProductSearchQuery = query; if (adminTab === 'products') renderAdminContent(); }
 function renderAdminContent() {
   const orders = DB.get('orders') || [], products = DB.get('products') || [], el = document.getElementById('adminContent');
   if (!el) return;
   if (adminTab === 'dashboard') {
-    const pending = orders.filter(o => o.status === 'pending').length, revenue = orders.reduce((s, o) => s + o.total, 0), lowStock = products.filter(p => p.stock < 5).length;
-    el.innerHTML = `<div class="stat-cards"><div class="stat-card"><div class="label">Orders</div><div class="value">${orders.length}</div></div><div class="stat-card"><div class="label">Pending</div><div class="value">${pending}</div></div><div class="stat-card"><div class="label">Revenue</div><div class="value">LKR ${(revenue / 1000).toFixed(1)}K</div></div><div class="stat-card"><div class="label">Low stock</div><div class="value">${lowStock}</div></div></div>`;
+    const pending = orders.filter(o => o.status === 'pending').length;
+    const revenue = orders.reduce((s, o) => s + o.total, 0);
+    const lowStock = products.filter(p => p.stock < 5).length;
+    el.innerHTML = `
+      <div class="stat-cards">
+        <div class="stat-card"><div class="label">Orders</div><div class="value">${orders.length}</div></div>
+        <div class="stat-card"><div class="label">Pending</div><div class="value">${pending}</div></div>
+        <div class="stat-card"><div class="label">Revenue</div><div class="value">LKR ${(revenue / 1000).toFixed(1)}K</div></div>
+        <div class="stat-card" id="lowStockCard" style="cursor:pointer;"><div class="label">Low stock</div><div class="value">${lowStock}</div></div>
+      </div>
+    `;
+    const lowStockCard = document.getElementById('lowStockCard');
+    if (lowStockCard) {
+      lowStockCard.addEventListener('click', () => {
+        lowStockFilterActive = true;
+        adminTab = 'products';
+        renderAdminContent();
+      });
+    }
   } else if (adminTab === 'orders') {
     let filteredOrders = [...orders];
     if (dateRangeStart || dateRangeEnd) filteredOrders = filteredOrders.filter(o => isOrderInDateRange(o.date, dateRangeStart, dateRangeEnd));
@@ -1191,11 +1581,51 @@ function renderAdminContent() {
     el.innerHTML = `<div class="filter-bar"><div class="form-group" style="margin-bottom:0;"><label>Start Date</label><input type="date" id="startDate" value="${dateRangeStart}" onchange="applyDateRangeFilter()"/></div><div class="form-group" style="margin-bottom:0;"><label>End Date</label><input type="date" id="endDate" value="${dateRangeEnd}" onchange="applyDateRangeFilter()"/></div><div class="form-group" style="margin-bottom:0;"><label>Order Status</label><select id="orderStatusFilter" onchange="applyDateRangeFilter()"><option value="all" ${statusFilter === 'all' ? 'selected' : ''}>All</option><option value="pending" ${statusFilter === 'pending' ? 'selected' : ''}>Pending</option><option value="confirmed" ${statusFilter === 'confirmed' ? 'selected' : ''}>Confirmed</option><option value="cancelled" ${statusFilter === 'cancelled' ? 'selected' : ''}>Cancelled</option></select></div><div><button class="btn-gold" onclick="exportFilteredExcel()">📎 Export Filtered to Excel</button></div></div><div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Order ID</th><th>Customer</th><th>Phone 1</th><th>Date</th><th>Total</th><th>Delivery Status</th><th>Actions</th></tr></thead><tbody>${filteredOrders.map(o => `<tr style="cursor:pointer" onclick="openOrderDetail('${o.id}')"><td style="font-weight:700;color:var(--gold)" data-label="Order ID">${o.id}</td><td data-label="Customer">${o.customer.name}</td><td data-label="Phone 1">${o.customer.phone1}</td><td data-label="Date">${o.date}</td><td data-label="Total">LKR ${o.total.toLocaleString()}</td><td data-label="Delivery Status" onclick="event.stopPropagation()"><select class="status-badge delivery-${(o.deliveryStatus || 'Pending').toLowerCase()}" onchange="updateDeliveryStatus('${o.id}',this.value)" style="border:1px solid var(--border);border-radius:4px;padding:0.2rem;font-size:0.7rem;font-weight:700;background:white;"><option value="Pending" ${(o.deliveryStatus || 'Pending') === 'Pending' ? 'selected' : ''}>Pending</option><option value="Shipped" ${o.deliveryStatus === 'Shipped' ? 'selected' : ''}>Shipped</option><option value="Delivered" ${o.deliveryStatus === 'Delivered' ? 'selected' : ''}>Delivered</option></select></td><td data-label="Actions" onclick="event.stopPropagation();"><button class="action-icon" onclick="generatePDF('${o.id}')" title="PDF">📄</button><button class="action-icon" onclick="deleteOrder('${o.id}')" title="Delete">🗑</button></td></tr>`).join('')}</tbody></table></div>${filteredOrders.length === 0 ? '<p style="text-align:center;padding:2rem">No orders match filters.</p>' : ''}`;
   } else if (adminTab === 'products') {
     let filteredProducts = [...products];
+    if (lowStockFilterActive) {
+      filteredProducts = filteredProducts.filter(p => p.stock < 5);
+    }
     if (adminProductSearchQuery.trim() !== '') {
       const query = adminProductSearchQuery.toLowerCase();
       filteredProducts = filteredProducts.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
     }
-    el.innerHTML = `<div style="margin-bottom:1rem;"><input type="text" id="adminProductSearch" placeholder="🔍 Search products by name or category..." style="width:100%;max-width:400px;border:1.5px solid var(--border);border-radius:8px;padding:0.6rem 1rem;font-size:0.9rem;background:var(--cream);outline:none;" value="${adminProductSearchQuery}" oninput="updateAdminProductSearch(this.value)"></div><div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Image</th><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Actions</th></tr></thead><tbody>${filteredProducts.map(p => `<tr><td data-label="Image"><div style="width:40px;height:40px;border-radius:6px;background:#F0EBE3;display:flex;align-items:center;justify-content:center;overflow:hidden">${renderMedia(p.imageData, p.emoji, "w-full h-full object-cover")}</div></td><td data-label="Product">${p.name}</td><td data-label="Category">${p.category}</td><td data-label="Price">LKR ${p.price.toLocaleString()}</td><td data-label="Stock"><input type="number" value="${p.stock}" min="0" style="width:70px;border:1px solid var(--border);border-radius:6px;padding:0.25rem;background:var(--cream)" onchange="updateStock('${p.id}',this.value)"/></td><td data-label="Actions"><button class="action-icon" onclick="editProduct('${p.id}')">✏️</button> <button class="action-icon" onclick="deleteProduct('${p.id}')">🗑</button></td></tr>`).join('')}</tbody></table></div>${filteredProducts.length === 0 ? '<p style="text-align:center;padding:2rem;color:var(--muted)">No products match your search.</p>' : ''}`;
+    const resetButtonHtml = lowStockFilterActive
+      ? `<button class="admin-btn" id="resetLowStockFilter" style="margin-left: 1rem; background: var(--gold); color: var(--dark);">✖ Clear Low Stock Filter</button>`
+      : '';
+    el.innerHTML = `
+      <div style="margin-bottom:1rem; display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+        <input type="text" id="adminProductSearch" placeholder="🔍 Search products by name or category..." style="flex:1; max-width:400px; border:1.5px solid var(--border); border-radius:8px; padding:0.6rem 1rem; font-size:0.9rem; background:var(--cream); outline:none;" value="${adminProductSearchQuery}" oninput="updateAdminProductSearch(this.value)">
+        ${resetButtonHtml}
+      </div>
+      <div style="overflow-x:auto">
+        <table class="data-table">
+          <thead>
+            <tr><th>Image</th><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Visible</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+            ${filteredProducts.map(p => `
+              <tr>
+                <td data-label="Image"><div style="width:40px;height:40px;border-radius:6px;background:#F0EBE3;display:flex;align-items:center;justify-content:center;overflow:hidden">${renderMedia(p.imageData, p.emoji, "w-full h-full object-cover")}</div></td>
+                <td data-label="Product">${p.name}</td>
+                <td data-label="Category">${p.category}</td>
+                <td data-label="Price">LKR ${p.price.toLocaleString()}</td>
+                <td data-label="Stock"><input type="number" value="${p.stock}" min="0" style="width:70px;border:1px solid var(--border);border-radius:6px;padding:0.25rem;background:var(--cream)" onchange="updateStock('${p.id}',this.value)"/></td>
+                <td data-label="Visible" style="text-align:center;"><input type="checkbox" ${p.visible !== false ? 'checked' : ''} onchange="toggleVisibility('${p.id}', this.checked); renderAdminContent();"></td>
+                <td data-label="Actions"><button class="action-icon" onclick="editProduct('${p.id}')">✏️</button> <button class="action-icon" onclick="deleteProduct('${p.id}')">🗑</button></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+      ${filteredProducts.length === 0 ? '<p style="text-align:center;padding:2rem;color:var(--muted)">No products match the current filter.</p>' : ''}
+    `;
+    const resetBtn = document.getElementById('resetLowStockFilter');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        lowStockFilterActive = false;
+        adminProductSearchQuery = '';
+        renderAdminContent();
+      });
+    }
   } else if (adminTab === 'pricing') {
     el.innerHTML = `<div class="product-form" style="max-width:500px;"><h3>Global Pricing Settings</h3><div class="form-group"><label>Global Discount (%)</label><input type="number" id="globalDiscountInput" step="0.1" value="${globalDiscountPercent}" placeholder="e.g., 10 for 10% off"></div><div class="form-group"><label>Shipping Charge (LKR)</label><input type="number" id="shippingChargeInput" step="50" value="${shippingCharge}" placeholder="Flat delivery fee"></div><button class="btn-gold" onclick="savePricingSettings()">Save Pricing</button></div>`;
   } else if (adminTab === 'branding') {
@@ -1334,8 +1764,8 @@ function saveProduct() {
   const products = DB.get('products') || [];
   if (editingProduct) {
     const idx = products.findIndex(p => p.id === editingProduct.id);
-    if (idx > -1) { products[idx] = { ...products[idx], name, category: cat, price, oldPrice, stock, desc, sizes, colors, relatedProducts: relatedIds, imageData: pendingImageBase64 || products[idx].imageData, emoji: products[idx].emoji || '📦' }; }
-  } else { products.push({ id: 'p' + Date.now(), name, category: cat, price, oldPrice, stock, desc, sizes, colors, relatedProducts: relatedIds, imageData: pendingImageBase64 || null, emoji: '📦', images: [] }); }
+    if (idx > -1) { products[idx] = { ...products[idx], name, category: cat, price, oldPrice, stock, desc, sizes, colors, relatedProducts: relatedIds, imageData: pendingImageBase64 || products[idx].imageData, emoji: products[idx].emoji || '📦', visible: products[idx].visible !== undefined ? products[idx].visible : true }; }
+  } else { products.push({ id: 'p' + Date.now(), name, category: cat, price, oldPrice, stock, desc, sizes, colors, relatedProducts: relatedIds, imageData: pendingImageBase64 || null, emoji: '📦', images: [], visible: true }); }
   DB.set('products', products);
   editingProduct = null; pendingImageBase64 = null; adminTab = 'products'; renderAdmin();
   toast('Product saved', 'success');
